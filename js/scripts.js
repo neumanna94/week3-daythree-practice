@@ -59,9 +59,39 @@ function binaryToDecimal(inputBinary){
   return outputSum;
 }
 function decimalToHexidecimal(inputDecimal){
+  var quotient = (inputDecimal/16);
+  var remainder = quotient*16 - Math.floor(quotient)*16;
+  var hexidecimalOutput = "";
+  hexidecimalOutput += hexidecimalLookUp(remainder);
+  quotient = Math.floor(quotient);
+  while(quotient > 0 ){
+    quotient = quotient/16;
+    remainder = quotient*16 - Math.floor(quotient)*16;
+    console.log(remainder);
+    quotient = Math.floor(quotient);
+    hexidecimalOutput = hexidecimalLookUp(remainder) + hexidecimalOutput;
+  }
+  return hexidecimalOutput.toString();
+}
+function hexidecimalLookUp(input){
+  if(input == 10){
+    input = "A";
+  } else if(input == 11){
+    input = "B";
+  } else if(input == 12){
+    input = "C";
+  } else if(input == 13){
+    input = "D";
+  } else if(input == 14){
+    input = "E";
+  } else if(input == 15){
+    input = "F";
+  } else {
+    input = input;
+  }
+  return input;
 
 }
-
 function tester(){
   for(var i = 0; i <= 100; i++){
     console.log("Decimal: " + i + " Binary Equiv: " + decimalToBinary(i));
