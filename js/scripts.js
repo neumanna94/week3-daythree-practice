@@ -1,30 +1,22 @@
 function cryptosquare(inputString){
   var stringLength=inputString.length;
-  var rows=0;
-  var columns=0;
-  var count=0;
-  if(stringLength%Math.pow(stringLength,.5)===0){
-    rows = Math.pow(stringLength,.5);
-    columns = rows;
-  } else {
-    rows = 9;
-    columns = stringLength/9;
-  }
-  var outputArray = matrixCreate(rows, columns);
-  for(var i = 0; i < rows; i ++){
-    for(var j = 0; j < columns; j ++){
-      outputArray[i,j] = inputString[count];
-      count++;
+  var mSide = Math.ceil(Math.pow(stringLength,.5));
+  var outputMatrix = matrixCreate(mSide, mSide);
+  var currentRow = 0;
+  for(var i = 0; i < stringLength; i ++){
+    if((i%mSide===0)&&(i!=0)){
+      currentRow++;
     }
+    outputMatrix[currentRow][i%mSide] = inputString[i];
   }
-  return outputArray[0][0];
+  return outputMatrix;
 }
 function matrixCreate(rows, columns){
   var outMatrix = [];
-  for(var i =0; i <rows; i++){
-    outMatrix[i] = [];
+  for(var i =0; i < rows; i++){
+    outMatrix.push([]);
     for(var j=0; j < columns; j++){
-      outMatrix[i][j]="-";
+      outMatrix[i][j] = null;
     }
   }
   return outMatrix;
@@ -47,8 +39,8 @@ function binaryToDecimal(inputBinary){
   var arrLength = inputBinary.length;
   var outputSum = 0;
   var tracker = 0;
+
   for(var i = arrLength-1; i >= 0; i--){
-    console.log(inputBinary[i] + ", " + tracker);
     if(inputBinary[i]==1){
       outputSum += Math.pow(2,tracker);
     } else {
@@ -67,7 +59,6 @@ function decimalToHexidecimal(inputDecimal){
   while(quotient > 0 ){
     quotient = quotient/16;
     remainder = quotient*16 - Math.floor(quotient)*16;
-    console.log(remainder);
     quotient = Math.floor(quotient);
     hexidecimalOutput = hexidecimalLookUp(remainder) + hexidecimalOutput;
   }
@@ -94,6 +85,6 @@ function hexidecimalLookUp(input){
 }
 function tester(){
   for(var i = 0; i <= 100; i++){
-    console.log("Decimal: " + i + " Binary Equiv: " + decimalToBinary(i));
+    console.log("Decimal: " + i + " Hexidecimal: " + decimalToBinary(i));
   }
 }
